@@ -1,15 +1,22 @@
 package io.javabrains.entity;
 
+
+
+import java.text.SimpleDateFormat;
+
 import lombok.AllArgsConstructor;
 import lombok.Data;
 import lombok.NoArgsConstructor;
 
 public class Session {
+	
+
 	private String loginstatus;
 	private String customername;
 	private String customertype;
 	private String lastlogindate;
 	private String sessionid;
+	
 	
 	public Session(String loginstatus, String customername, String customertype, String lastlogindate,
 			String sessionid) {
@@ -20,7 +27,8 @@ public class Session {
 		this.lastlogindate = lastlogindate;
 		this.sessionid = sessionid;
 	}
-
+	
+	
 	public String getLoginstatus() {
 		return loginstatus;
 	}
@@ -45,13 +53,6 @@ public class Session {
 		this.customertype = customertype;
 	}
 
-	public String getLastlogindate() {
-		return lastlogindate;
-	}
-
-	public void setLastlogindate(String lastlogindate) {
-		this.lastlogindate = lastlogindate;
-	}
 
 	public String getSessionid() {
 		return sessionid;
@@ -60,6 +61,19 @@ public class Session {
 	public void setSessionid(String sessionid) {
 		this.sessionid = sessionid;
 	}
+
+
+	public String getLastlogindate() {
+		return lastlogindate;
+	}
+
+
+	public void setLastlogindate(String lastlogindate) {
+		this.lastlogindate = lastlogindate;
+	}
+
+
+	
 	
 	
 }

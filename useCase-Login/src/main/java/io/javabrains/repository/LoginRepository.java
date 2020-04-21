@@ -10,9 +10,6 @@ import io.javabrains.entity.User;
 public interface LoginRepository extends JpaRepository<User,Integer> {
 
 	User findByUserName(String username);
-	
-	@Query(value="SELECT  Customer_Session_Id,customer_type,Session_status,last_login_date FROM USR_TABLE",nativeQuery=true) List<Object> getValues();
-
-	
+	User findByCustomerSessionId(String customerSessionId);
 		
 }

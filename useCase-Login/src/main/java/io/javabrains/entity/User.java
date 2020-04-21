@@ -2,6 +2,9 @@ package io.javabrains.entity;
 
 
 
+import java.text.SimpleDateFormat;
+
+import javax.persistence.Column;
 import javax.persistence.Entity;
 import javax.persistence.Id;
 import javax.persistence.Table;
@@ -21,12 +24,15 @@ public class User {
 	
 	
 	
+	
+	
 	@Id
 	private int id;
 	private String userName;
 	private String password;
 	private String email;
-	private String Customer_Session_Id;
+	//@Column(name="Customer_Session_Id")
+	private String customerSessionId;
 	private String customer_type;
 	private String Session_status;
 	private String last_login_date;
@@ -55,10 +61,10 @@ public class User {
 		this.email = email;
 	}
 	public String getCustomer_Session_Id() {
-		return Customer_Session_Id;
+		return customerSessionId;
 	}
 	public void setCustomer_Session_Id(String customer_Session_Id) {
-		Customer_Session_Id = customer_Session_Id;
+		this.customerSessionId = customer_Session_Id;
 	}
 	public String getCustomer_type() {
 		return customer_type;
@@ -79,8 +85,6 @@ public class User {
 		this.last_login_date = last_login_date;
 	}
 	
-	
-
 	public User(int id, String userName, String password, String email, String customer_Session_Id,
 			String customer_type, String session_status, String last_login_date) {
 		super();
@@ -88,17 +92,17 @@ public class User {
 		this.userName = userName;
 		this.password = password;
 		this.email = email;
-		Customer_Session_Id = customer_Session_Id;
+		this.customerSessionId = customer_Session_Id;
 		this.customer_type = customer_type;
 		Session_status = session_status;
 		this.last_login_date = last_login_date;
 	}
 	
-	
 	public User()
 	{
 		
 	}
+	
 	
 	
 	

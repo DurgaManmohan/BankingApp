@@ -32,7 +32,7 @@ public class UseCaseLoginApplication {
    @PostConstruct
 	public void initUsers() {
 		List<User> users = 	Stream.of(
-				new User(101,"rahul","know","user1@gmail.com","c457041f-a7a1-4370-9e24-3dbc9ccb6126","tier-1","inactive","2/2/2020"),
+				new User(101,"rahul","know","user1@gmail.com","c457041f-a7a1-4370-9e24-3dbc9ccb6126","tier-1","inactive","2/3/2021"),
 				new User(102,"vikram","password","user2@gmail.com","6e2e71b4-c006-448e-be66-8465bda35747","tier-2","active","2/3/2021")
 				).collect(Collectors.toList());
 		repository.saveAll(users);
