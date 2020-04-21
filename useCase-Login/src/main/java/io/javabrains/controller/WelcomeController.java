@@ -24,6 +24,8 @@ import io.javabrains.entity.AuthRequest;
 import io.javabrains.entity.Logoff;
 import io.javabrains.entity.User;
 import io.javabrains.entity.Session;
+import io.javabrains.entity.Sessionstatus;
+import io.javabrains.entity.Status;
 import io.javabrains.repository.LoginRepository;
 
 import io.javabrains.util.JwtUtil;
@@ -47,13 +49,16 @@ public class WelcomeController {
 	private LoginRepository repository;
 	
 	
-	@GetMapping("/authentication")
-	public List<Object> getDetails() {
-		String url= "http://localhost:8080/logins";
-		Object[] objects= restTemplate.getForObject(url, Object[].class);
-		return Arrays.asList(objects);
+	@PostMapping("/authentication")
+	public Sessionstatus generateSession(@RequestBody Status status) {
+		User user=repository.findByCustomerSessionId(status.getSessionid());
+		if(user==null) {
+			return new Sessionstatus("Invalid");
+		}
+		return new Sessionstatus("Valid");
 		
 	}
+	
 	
 	@PostMapping("/authenticate")
     public Session generateToken(@RequestBody AuthRequest authRequest) throws Exception {

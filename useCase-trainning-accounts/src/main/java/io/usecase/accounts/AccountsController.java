@@ -18,6 +18,9 @@ import org.springframework.web.context.request.RequestContextHolder;
 import io.usecase.Accounts;
 import io.usecase.Person;
 import io.usecase.Rewards;
+import io.usecase.Sessionstatus;
+import io.usecase.Status;
+import io.usecase.Trans;
 import io.usecase.Transcation;
 import io.usecase.User;
 
@@ -25,6 +28,8 @@ import io.usecase.User;
 
 @RestController
 class AccountsController {
+	
+	
   // Aggregate root
 
   @GetMapping("/employees")
@@ -36,31 +41,42 @@ class AccountsController {
   public Person getById(@RequestBody Accounts accounts){
 	  
 	  RestTemplate restTemplate=new RestTemplate();
+	  Sessionstatus req=restTemplate.postForObject("http://localhost:9192/authentication",new Status(accounts.getSessionid()),Sessionstatus.class);
 	  System.out.println(accounts.getUserid());
-	  String p=RequestContextHolder.currentRequestAttributes().getSessionId();
-	  if(accounts.getSessionid().equals(p)){
-	  User user=restTemplate.getForObject("http://localhost:9192/authenticate" + accounts.getSessionid(), User.class);
-	  }
-	  try {
+	  if(req.getSessionstatus().equals("Valid")){
+	  //User req=restTemplate.getForObject("http://localhost:9192/authenticate" + accounts.getSessionid(), User.class);
+	 
+	 
 	  Person person=restTemplate.getForObject("http://localhost:8080/persons/" + accounts.getUserid(), Person.class);
 	 
 	  System.out.println(person);
 	  return person;
 	  }
-	  catch (Exception ex) {
-      	return new Person("Invalid",0,"invalid",0,0,"invalid","invalid");
-      }
+	  else {
+		  return null;
 	  }
+  }
+
+	  
+      	
+  
+      
 	  
   
   @PostMapping("/bank/user/dashboard/transcations")
-  public Transcation getByAccountId(@RequestBody Accounts accounts){
+  public Transcation getByAccountId(@RequestBody Trans trans){
 	  
 	  RestTemplate restTemplate=new RestTemplate();
-	  System.out.println(accounts.getUserid());
-	  Transcation transcation=restTemplate.getForObject("http://localhost:8080/transcations/" + accounts.getUserid(), Transcation.class);
-	  System.out.println(transcation);
+	  Sessionstatus req=restTemplate.postForObject("http://localhost:9192/authentication",new Status(trans.getSessionid()),Sessionstatus.class);
+	  System.out.println(trans.getAccountNumber());
+	  if(req.getSessionstatus().equals("Valid")){
+		  Transcation transcation=restTemplate.getForObject("http://localhost:8080/transcations/" + trans.getAccountNumber(), Transcation.class);
+		  System.out.println(transcation);
 	  return transcation;
+	  }
+	  else {
+		  return null;
+	  }
   }
   @GetMapping("/bank/user/rewards/{userid}")
   public Rewards getByRewardsId(@PathVariable String userid){
